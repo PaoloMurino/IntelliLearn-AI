@@ -6,6 +6,8 @@ def calcola_distanza(lat1, lon1, lat2, lon2):
     # Formula di Haversine per calcolare la distanza geospaziale tra due punti dati latitudine e longitudine
     R = 6371  # Raggio medio della Terra in chilometri
 
+    #provaaaaaaaaa
+
     # Converte le latitudini e le longitudini da gradi a radianti
     lat1_rad = math.radians(lat1)
     lon1_rad = math.radians(lon1)
