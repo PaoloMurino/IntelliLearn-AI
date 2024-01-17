@@ -1,51 +1,36 @@
-import pandas as pd
 import heapq
-import math
 
-from geopy.distance import distance
+import pandas as pd
+from geopy.distance import great_circle
+from sklearn.neighbors import BallTree
+import numpy as np
 
-
-def calcola_distanza(lat1, lon1, lat2, lon2):
-    # Utilizza la funzione distance dalla libreria geopy
-    coord1 = (lat1, lon1)
-    coord2 = (lat2, lon2)
-    distanza = distance(coord1, coord2).km
-    return distanza
-
-def euristica(lat1, lon1, lat2, lon2):
-    # Puoi utilizzare la stessa formula di Haversine o altre euristiche basate sulla distanza geospaziale
-    return calcola_distanza(lat1, lon1, lat2, lon2)
-
-def costruisci_grafo(dati, soglia_distanza=0.4):
+def costruisci_grafo(dati, soglia_distanza=1):
     grafo = {}
 
+    # Verifica i nomi delle colonne nel DataFrame
+    lat_col, lon_col = dati.columns
+
+    coords = dati[[lat_col, lon_col]].to_numpy()
+    coordinates = np.radians(coords)
+    tree = BallTree(coordinates, metric='haversine')
+
     for i in range(len(dati)):
-        nodo_attuale = (dati['latitudine'].iloc[i], dati['longitudine'].iloc[i])
+        nodo_attuale = tuple(np.round(coordinates[i], 6))  # Arrotonda a 6 decimali
 
-        # Aggiungi il nodo attuale al grafo se non è già presente
-        if nodo_attuale not in grafo:
-            grafo[nodo_attuale] = []
+        # Trova i vicini utilizzando BallTree
+        distanze, indici_vicini = tree.query_radius([nodo_attuale], r=np.radians(soglia_distanza), return_distance=True)
 
-        # Cerca nodi vicini basati su distanza spaziale
-        for j in range(len(dati)):
-            if i != j:  # Assicurati di non confrontare il nodo con se stesso
-                nodo_successivo = (dati['latitudine'].iloc[j], dati['longitudine'].iloc[j])
-                distanza = calcola_distanza(nodo_attuale[0], nodo_attuale[1], nodo_successivo[0], nodo_successivo[1])
-
-                if distanza < soglia_distanza:
-                    # Aggiungi il nodo successivo al grafo se non è già presente
-                    if nodo_successivo not in grafo:
-                        grafo[nodo_successivo] = []
-
-                    grafo[nodo_attuale].append(nodo_successivo)
-                    grafo[nodo_successivo].append(nodo_attuale)
+        for distanza, j in zip(distanze[0], indici_vicini[0]):
+            if i != j:
+                nodo_successivo = tuple(np.round(coordinates[j], 6))  # Arrotonda a 6 decimali
+                grafo.setdefault(nodo_attuale, []).append(nodo_successivo)
+                grafo.setdefault(nodo_successivo, []).append(nodo_attuale)
 
     return grafo
 
 
-def trova_percorso_ottimale(punto_inizio, punto_fine, dati):
-    grafo = costruisci_grafo(dati)
-
+def trova_percorso_ottimale(punto_inizio, punto_fine, grafo):
     coda_prioritaria = []
     heapq.heappush(coda_prioritaria, (0, punto_inizio))  # (costo totale, nodo)
     distanze = {nodo: float('infinity') for nodo in grafo}
@@ -63,24 +48,41 @@ def trova_percorso_ottimale(punto_inizio, punto_fine, dati):
             return percorso_ottimale[::-1]
 
         for vicino in grafo[nodo_attuale]:
-            nuova_distanza = distanze[nodo_attuale] + calcola_distanza(nodo_attuale[0], nodo_attuale[1], vicino[0], vicino[1])
+            nuova_distanza = distanze[nodo_attuale] + great_circle(np.degrees(nodo_attuale), np.degrees(vicino)).kilometers
             if nuova_distanza < distanze[vicino]:
                 distanze[vicino] = nuova_distanza
-                costo_totale = nuova_distanza + euristica(vicino[0], vicino[1], punto_fine[0], punto_fine[1])
+                costo_totale = nuova_distanza + great_circle(np.degrees(vicino), np.degrees(punto_fine)).kilometers
                 predecessori[vicino] = nodo_attuale
                 heapq.heappush(coda_prioritaria, (costo_totale, vicino))
 
-    return None  # Nessun percorso trovato
+    return None
+
 
 # Leggi i dati dal file Excel
 dati = pd.read_excel("coordinate.xlsx")
 
-punto_inizio = (39.43054, -0.33518)
-punto_fine = (39.4507282, -0.3073923)
-percorso_ottimale = trova_percorso_ottimale(punto_inizio, punto_fine, dati)
+# Seleziona il punto di inizio e di fine dal dataset
+punto_inizio = (39.43052, -0.33519)
+punto_fine = (39.42422, -0.3141)
+
+# Costruisci il grafo una sola volta
+grafo = costruisci_grafo(dati)
+
+# Arrotondamento a 6 decimali per punto_inizio e punto_fine
+punto_inizio = tuple(np.round(np.radians(punto_inizio), 6))
+punto_fine = tuple(np.round(np.radians(punto_fine), 6))
+
+# Trova il percorso ottimale
+percorso_ottimale = trova_percorso_ottimale(punto_inizio, punto_fine, grafo)
+
+"""
+# Trova il percorso ottimale
+percorso_ottimale = trova_percorso_ottimale(tuple(np.radians(punto_inizio)), tuple(np.radians(punto_fine)), grafo)
+"""
 
 # Crea un DataFrame con i risultati
 risultati_df = pd.DataFrame(percorso_ottimale, columns=['latitudine', 'longitudine'])
+risultati_df[['latitudine', 'longitudine']] = np.degrees(risultati_df[['latitudine', 'longitudine']])
 
 # Salva il DataFrame in un file Excel
 risultati_df.to_excel("percorso_ottimale.xlsx", index=False)
