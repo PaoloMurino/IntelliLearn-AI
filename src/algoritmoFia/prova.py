@@ -1,5 +1,7 @@
 import heapq
 import math
+import networkx as nx
+import matplotlib.pyplot as plt
 
 import pandas as pd
 
@@ -55,8 +57,36 @@ punto_inizio = (39.43053, -0.33519)
 punto_fine = (39.4242263, -0.3141018)
 
 # Costruisci il grafo
-graph = {coord: [other_coord for other_coord in dataset if other_coord != coord] for coord in dataset}
+#graph = {coord: [other_coord for other_coord in dataset if other_coord != coord] for coord in dataset}
 
+# Costruisci il grafo correttamente
+graph = {coord: [] for coord in dataset}
+for coord in dataset:
+    for other_coord in dataset:
+        if coord != other_coord:
+            graph[coord].append(other_coord)
+
+"""
+# Crea un grafo di NetworkX
+G = nx.Graph()
+
+# Aggiungi i nodi al grafo
+G.add_nodes_from(graph.keys())
+
+# Aggiungi gli archi al grafo
+for node, neighbors in graph.items():
+    G.add_edges_from((node, neighbor) for neighbor in neighbors)
+
+# Disegna il grafo
+pos = {coord: (coord[1], -coord[0]) for coord in G.nodes()}  # Inverti le coordinate per una migliore visualizzazione
+nx.draw(G, pos, with_labels=True, node_size=700, node_color="skyblue", font_size=8, font_color="black", font_weight="bold", font_family="Arial")
+plt.show()
+
+# Stampa il grafo
+print("Grafo:")
+for node, neighbors in graph.items():
+    print(f"{node}: {neighbors}")
+"""
 # Trova il percorso ottimale
 path = a_star_search(graph, punto_inizio, punto_fine)
 
