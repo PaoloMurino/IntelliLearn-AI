@@ -15,16 +15,24 @@ def haversine(lat1, lon1, lat2, lon2):
 
     distance = R * c
     return distance
-
+"""
 # Leggi il foglio Excel con pandas
 file_path = 'coordinatePerProva.xlsx'  # Modifica il percorso del tuo file Excel
 df = pd.read_excel(file_path, names=['latitudine', 'longitudine'])
+"""
+file_path = "coordinateOK1.csv"
+df = pd.read_csv(file_path, names=['latitudine', 'longitudine'])
 
-# Converti il DataFrame in una lista di tuple (coordinate)
-#dataset = [(row['latitudine'], row['longitudine']) for _, row in df.iterrows()]
+# Converti le colonne in numeri e gestisci eventuali errori
+df['latitudine'] = pd.to_numeric(df['latitudine'], errors='coerce')
+df['longitudine'] = pd.to_numeric(df['longitudine'], errors='coerce')
 
-# Rimuovi le istanze duplicate nel DataFrame
-df_no_duplicates = df.drop_duplicates(subset=['latitudine', 'longitudine'])
+# Rimuovi le istanze duplicate nel DataFrame dopo la conversione numerica
+df_no_duplicates = df.drop_duplicates(subset=['latitudine', 'longitudine']).copy()
+
+# Rimuovi le righe con dati mancanti nelle colonne numeriche
+df_no_duplicates = df_no_duplicates.dropna(subset=['latitudine', 'longitudine'])
+
 
 # Converti il DataFrame senza duplicati in una lista di tuple (coordinate)
 dataset = [(row['latitudine'], row['longitudine']) for index, row in df_no_duplicates.iterrows()]
@@ -51,7 +59,7 @@ for point, neighbors in graph.items():
     print(f"{point} -> {neighbors}")
 """
 # Salva il grafo in un file JSON
-output_file_path = 'grafo_coordinate.json'
+output_file_path = 'grafo_coordinate1.json'
 with open(output_file_path, 'w') as json_file:
     json.dump(graph, json_file, indent=2)
 
