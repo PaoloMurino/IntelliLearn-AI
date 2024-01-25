@@ -30,11 +30,14 @@ def a_star(start, goal, graph):
 
     while open_set:
         current_node = heapq.heappop(open_set)
-        print(current_node.lat, current_node.lon)
+
+        # Verifica se il nodo è già stato esplorato
+        if (current_node.lat, current_node.lon) in closed_set:
+            continue
+
         if (current_node.lat, current_node.lon) == (goal.lat, goal.lon):
             path = []
             while current_node:
-                print("ci siamo!")
                 path.append((current_node.lat, current_node.lon))
                 current_node = current_node.parent
             return path[::-1]
@@ -43,7 +46,7 @@ def a_star(start, goal, graph):
 
         for neighbor in graph[(current_node.lat, current_node.lon)]:
             if neighbor not in closed_set:
-                g_score = current_node.cost + haversine_distance(current_node.lat, current_node.lon, neighbor[0], neighbor[1])  # 0 e 1 indicano lat e lon di neighbor
+                g_score = current_node.cost + haversine_distance(current_node.lat, current_node.lon, neighbor[0], neighbor[1])
                 h_score = haversine_distance(neighbor[0], neighbor[1], goal.lat, goal.lon)
                 f_score = g_score + h_score
 
@@ -89,7 +92,7 @@ graph = {coord: [] for coord in dataset}
 
 # Utilizza itertools.combinations per ottenere tutte le coppie uniche di coordinate
 for coord1, coord2 in combinations(dataset, 2):
-    if haversine_distance(coord1[0], coord1[1], coord2[0], coord2[1]) < 1.0:  # Soglia di 45 m per decidere i vicini di punto
+    if haversine_distance(coord1[0], coord1[1], coord2[0], coord2[1]) < 0.07:  # Soglia di 45 m per decidere i vicini di punto
         graph[coord1].append(coord2)
         graph[coord2].append(coord1)
 
