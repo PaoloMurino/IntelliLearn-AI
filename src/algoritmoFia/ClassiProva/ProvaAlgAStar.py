@@ -52,7 +52,7 @@ def a_star(start, goal, graph):
                 if neighbor_node not in open_set:
                     heapq.heappush(open_set, neighbor_node)
 
-    return None  # If no path is found
+    return None  # Se nessun percorso viene trovato
 
 
 # Punto di inizio e punto di fine
