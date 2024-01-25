@@ -2,6 +2,8 @@ import heapq
 import pandas as pd
 from math import radians, sin, cos, sqrt, atan2
 from itertools import combinations
+from haversine import haversine, Unit
+
 
 class Node:
     def __init__(self, lat, lon, cost=0, parent=None):
@@ -13,17 +15,14 @@ class Node:
     def __lt__(self, other):
         return self.cost < other.cost
 
-def haversine(lat1, lon1, lat2, lon2):
-    R = 6371  # Radius of the Earth in kilometers
 
-    dlat = radians(lat2 - lat1)
-    dlon = radians(lon2 - lon1)
-
-    a = sin(dlat / 2) ** 2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dlon / 2) ** 2
-    c = 2 * atan2(sqrt(a), sqrt(1 - a))
-
-    distance = R * c
+def haversine_distance(lat1, lon1, lat2, lon2):
+    # coord1 e coord2 devono essere tuple (latitudine, longitudine)
+    coord1 = (lat1, lon1)
+    coord2 = (lat2, lon2)
+    distance = haversine(coord1, coord2, unit=Unit.KILOMETERS)
     return distance
+
 
 def a_star(start, goal, graph):
     open_set = [start]
@@ -43,63 +42,58 @@ def a_star(start, goal, graph):
         closed_set.add((current_node.lat, current_node.lon))
 
         for neighbor in graph[(current_node.lat, current_node.lon)]:
-            print(neighbor)
             if neighbor not in closed_set:
-                g_score = current_node.cost + haversine(current_node.lat, current_node.lon, neighbor[0], neighbor[1]) #0 e 1 indicano lat e lon di neighbor
-                h_score = haversine(neighbor[0], neighbor[1], goal.lat, goal.lon)
+                g_score = current_node.cost + haversine_distance(current_node.lat, current_node.lon, neighbor[0], neighbor[1])  # 0 e 1 indicano lat e lon di neighbor
+                h_score = haversine_distance(neighbor[0], neighbor[1], goal.lat, goal.lon)
                 f_score = g_score + h_score
 
                 neighbor_node = Node(neighbor[0], neighbor[1], f_score, current_node)
 
                 if neighbor_node not in open_set:
                     heapq.heappush(open_set, neighbor_node)
-                else:
-                    # Se il nodo è già presente in open_set, confronta i costi e aggiorna se necessario
-                    existing_node_index = open_set.index(neighbor_node)
-                    if neighbor_node.cost < open_set[existing_node_index].cost:
-                        open_set[existing_node_index] = neighbor_node
 
     return None  # If no path is found
 
-#Punto di inizio e punto di fine
+
+# Punto di inizio e punto di fine
 start_point = Node(lat=39.4304979,
                    lon=-0.335182)
-end_point = Node(lat=39.42422,
-                 lon=-0.3141)
+end_point = Node(lat=39.4242263,
+                 lon=-0.3141018)
 """
-# Leggi il foglio Excel con pandas
+# legge il foglio Excel con pandas
 file_path = 'coordinatePerProva.xlsx'  # Modifica il percorso del tuo file Excel
 df = pd.read_excel(file_path, names=['latitudine', 'longitudine'])
 
-# Rimuovi le istanze duplicate nel DataFrame
+# Rimuove le istanze duplicate nel DataFrame
 df_no_duplicates = df.drop_duplicates(subset=['latitudine', 'longitudine'])
 """
-#legge il file csv con pandas
+# legge il file csv con pandas
 file_path = "coordinateOK1.csv"
 df = pd.read_csv(file_path, names=['latitudine', 'longitudine'])
 
-# Converti le colonne in numeri e gestisci eventuali errori
+# converte le colonne in numeri e gestisci eventuali errori
 df['latitudine'] = pd.to_numeric(df['latitudine'], errors='coerce')
 df['longitudine'] = pd.to_numeric(df['longitudine'], errors='coerce')
 
-# Rimuovi le istanze duplicate nel DataFrame dopo la conversione numerica
+# rimuove le istanze duplicate nel DataFrame dopo la conversione numerica
 df_no_duplicates = df.drop_duplicates(subset=['latitudine', 'longitudine']).copy()
 
-# Rimuovi le righe con dati mancanti nelle colonne numeriche
+# rimuove le righe con dati mancanti nelle colonne numeriche
 df_no_duplicates = df_no_duplicates.dropna(subset=['latitudine', 'longitudine'])
 
-# Converti il DataFrame senza duplicati in una lista di tuple (coordinate)
+# converte il DataFrame senza duplicati in una lista di tuple (coordinate)
 dataset = [(row['latitudine'], row['longitudine']) for index, row in df_no_duplicates.iterrows()]
 
 graph = {coord: [] for coord in dataset}
 
 # Utilizza itertools.combinations per ottenere tutte le coppie uniche di coordinate
 for coord1, coord2 in combinations(dataset, 2):
-    if haversine(coord1[0], coord1[1], coord2[0], coord2[1]) < 0.05:  # Soglia di 45 m per decidere i vicini di punto
+    if haversine_distance(coord1[0], coord1[1], coord2[0], coord2[1]) < 1.0:  # Soglia di 45 m per decidere i vicini di punto
         graph[coord1].append(coord2)
         graph[coord2].append(coord1)
 
-#lista contenente il percorso ottimale
+# lista contenente il percorso ottimale
 path = a_star(start_point, end_point, graph)
 
 if path:
