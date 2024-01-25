@@ -100,8 +100,11 @@ for coord1, coord2 in combinations(dataset, 2):
 path = a_star(start_point, end_point, graph)
 
 if path:
-    print("Percorso ottimale:")
-    for point in path:
-        print(point)
+    # Create a DataFrame from the path
+    path_df = pd.DataFrame(path, columns=['latitudine', 'longitudine'])
+
+    # Save the DataFrame to an Excel file
+    path_df.to_excel('percorso_ottimale.xlsx', index=False)
+    print("Percorso ottimale salvato in 'percorso_ottimale.xlsx'")
 else:
     print("Nessun percorso trovato.")
