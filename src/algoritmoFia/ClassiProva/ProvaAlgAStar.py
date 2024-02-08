@@ -46,7 +46,8 @@ def a_star(start, goal, graph):
 
         for neighbor in graph[(current_node.lat, current_node.lon)]:
             if neighbor not in closed_set:
-                g_score = current_node.cost + haversine_distance(current_node.lat, current_node.lon, neighbor[0], neighbor[1])
+                g_score = current_node.cost + haversine_distance(current_node.lat, current_node.lon, neighbor[0],
+                                                                 neighbor[1])
                 h_score = haversine_distance(neighbor[0], neighbor[1], goal.lat, goal.lon)
                 f_score = g_score + h_score
 
@@ -63,14 +64,7 @@ start_point = Node(lat=39.4304979,
                    lon=-0.335182)
 end_point = Node(lat=39.4242263,
                  lon=-0.3141018)
-"""
-# legge il foglio Excel con pandas
-file_path = 'coordinatePerProva.xlsx'  # Modifica il percorso del tuo file Excel
-df = pd.read_excel(file_path, names=['latitudine', 'longitudine'])
 
-# Rimuove le istanze duplicate nel DataFrame
-df_no_duplicates = df.drop_duplicates(subset=['latitudine', 'longitudine'])
-"""
 # legge il file csv con pandas
 file_path = "coordinateOK1.csv"
 df = pd.read_csv(file_path, names=['latitudine', 'longitudine'])
@@ -92,7 +86,8 @@ graph = {coord: [] for coord in dataset}
 
 # Utilizza itertools.combinations per ottenere tutte le coppie uniche di coordinate
 for coord1, coord2 in combinations(dataset, 2):
-    if haversine_distance(coord1[0], coord1[1], coord2[0], coord2[1]) < 0.07:  # Soglia di 45 m per decidere i vicini di punto
+    if haversine_distance(coord1[0], coord1[1], coord2[0],
+                          coord2[1]) < 0.07:  # Soglia di 45 m per decidere i vicini di punto
         graph[coord1].append(coord2)
         graph[coord2].append(coord1)
 
