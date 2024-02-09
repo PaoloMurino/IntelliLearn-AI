@@ -1,8 +1,8 @@
 import pandas as pd
 from src.algoritmoFia.AlgAStar import distanza_haversine
 
-file_path = "percorso_ottimaleGate3.csv"
-df = pd.read_csv(file_path, names=['latitudine', 'longitudine'])
+file_path = "percorso_ottimaleGate1.csv"
+df = pd.read_csv(file_path, header=None, names=['latitudine', 'longitudine'], skiprows=1)
 
 # Converte la colonna della latitudine in numeri
 df['latitudine'] = pd.to_numeric(df['latitudine'], errors='coerce')
@@ -12,6 +12,7 @@ df['longitudine'] = pd.to_numeric(df['longitudine'], errors='coerce')
 
 # Crea la lista delle coordinate
 percorso_ottimale = [(row['latitudine'], row['longitudine']) for index, row in df.iterrows()]
+
 
 def ammissibile(percorso_ottimale):
 
