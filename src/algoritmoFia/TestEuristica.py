@@ -16,12 +16,12 @@ percorso_ottimale = [(row['latitudine'], row['longitudine']) for index, row in d
 
 def ammissibile(percorso_ottimale):
 
-    # Calculate the heuristic (Haversine distance) from the start to the goal
+    # Calcolo dell'euristica (distanza di Haversine) dallo start all'obiettivo
     start = percorso_ottimale[0]
     goal = percorso_ottimale[-1]
     heuristic = distanza_haversine(start[0], start[1], goal[0], goal[1])
 
-    # Calculate the total cost of the path
+    # Calcolo del costo totale del percorso
     total_cost = 0
     for i in range(len(percorso_ottimale) - 1):
         total_cost += distanza_haversine(percorso_ottimale[i][0], percorso_ottimale[i][1], percorso_ottimale[i+1][0], percorso_ottimale[i+1][1])
@@ -31,31 +31,32 @@ def ammissibile(percorso_ottimale):
     else:
         print("non ammissibile!")
 
-    # The heuristic is admissible if it never overestimates the cost to reach the goal
+    # L'euristica è ammissibile se non sovrastima il costo per raggiungere l'obiettivo
     return heuristic <= total_cost
 
 def testConsistenza(percorso_ottimale):
-    # Get the start and goal from the keys of the dictionary
+    # Individuazione del nodo obiettivo
     goal = percorso_ottimale[-1]
 
-    # Iterate over all nodes in the path
+    # Itera tutti i nodi del percorso ottimale
     for i in range(len(percorso_ottimale) - 1):
-        # Get the current node and the next node
+        # Individua il nodo corrente e il nodo successivo
         current_node = percorso_ottimale[i]
         next_node = percorso_ottimale[i + 1]
 
-        # Calculate the cost from the current node to the next node
+        # Calcola il costo di passo tra il nodo corrente e il nodo successivo
         g_score = distanza_haversine(current_node[0], current_node[1], next_node[0], next_node[1])
 
-        # Calculate the heuristic from the current node to the goal and from the next node to the goal
+        # Calcolo dell'euristica dal nodo corrente all'obiettivo e dal nodo successivo all'obiettivo
         h_score_current = distanza_haversine(current_node[0], current_node[1], goal[0], goal[1])
         h_score_next = distanza_haversine(next_node[0], next_node[1], goal[0], goal[1])
 
-        # If the cost plus the heuristic from the next node is greater than the heuristic from the current node, the heuristic is not consistent
+        # Se il costo di passo più l'euristica dal nodo successivo è maggiore dell'euristica dal nodo corrente, l'euristica non è consistente
         if g_score + h_score_next > h_score_current:
-            return False
+            print("non consistente")
+            #return None
 
-    # If no inconsistency is found, the heuristic is consistent
+    # Se nessuna incosistenza è stata trovata, l'euristica è consistente
     return True
 
 ammissibilita = ammissibile(percorso_ottimale)
