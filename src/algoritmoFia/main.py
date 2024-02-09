@@ -50,7 +50,7 @@ def percorso_ottimale(gate):
     return path
 
 
-gate = 1
+gate = 3
 path = percorso_ottimale(gate)
 
 if path:
@@ -58,7 +58,7 @@ if path:
     path_df = pd.DataFrame(path, columns=['latitudine', 'longitudine'])
 
     # Salva il DataFrame in un file CSV
-    path_df.to_csv('percorso_ottimaleGate1.csv', index=False)
+    path_df.to_csv('percorso_ottimaleGate3.csv', index=False)
     print("Percorso ottimale salvato in 'percorso_ottimaleGate1.csv'")
 else:
     print("Nessun percorso trovato.")
