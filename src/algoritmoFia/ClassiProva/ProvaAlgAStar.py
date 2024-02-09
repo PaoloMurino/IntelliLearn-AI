@@ -63,6 +63,10 @@ start_point = Node(lat=39.4305577,
                    lon=-0.3351722)
 end_point = Node(lat=39.4242222,
                  lon=-0.3140294)
+
+#39.4384956,-0.3037465 punto gate 3
+#39.441493,-0.3274658 punto gate 2
+#39.4242222,-0.3140294 punto gate 1
 """
 # legge il foglio Excel con pandas
 file_path = 'coordinatePerProva.xlsx'  # Modifica il percorso del tuo file Excel
@@ -92,7 +96,7 @@ graph = {coord: [] for coord in dataset}
 
 # Utilizza itertools.combinations per ottenere tutte le coppie uniche di coordinate
 for coord1, coord2 in combinations(dataset, 2):
-    if haversine_distance(coord1[0], coord1[1], coord2[0], coord2[1]) < 0.025:  # Soglia di 45 m per decidere i vicini di punto
+    if haversine_distance(coord1[0], coord1[1], coord2[0], coord2[1]) < 0.026:  # Soglia di 45 m per decidere i vicini di punto
         graph[coord1].append(coord2)
         graph[coord2].append(coord1)
 
@@ -104,7 +108,8 @@ if path:
     path_df = pd.DataFrame(path, columns=['latitudine', 'longitudine'])
 
     # Save the DataFrame to an Excel file
-    path_df.to_excel('percorso_ottimale.xlsx', index=False)
+    #path_df.to_excel('percorso_ottimaleGate1.xlsx', index=False)
+    path_df.to_csv('percorso_ottimaleGate1.csv', index=False)
     print("Percorso ottimale salvato in 'percorso_ottimale.xlsx'")
 else:
     print("Nessun percorso trovato.")
