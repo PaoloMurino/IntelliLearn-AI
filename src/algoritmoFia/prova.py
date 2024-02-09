@@ -7,6 +7,7 @@ def percorso_ottimale(gate):
     # Definizione del punto di partenza
     start_point = Node(lat=39.4305577, lon=-0.3351722)
 
+    # Definizione del punto  di destinazione
     if gate == 1:
         end_point = Node(lat=39.4242222, lon=-0.3140294)
     elif gate == 2:
@@ -43,7 +44,7 @@ def percorso_ottimale(gate):
             graph[coord1].append(coord2)
             graph[coord2].append(coord1)
 
-    # Trova il percorso ottimale utilizzando l'algoritmo A*
+    # Individuazione del percorso ottimale utilizzando l'algoritmo A*
     path = a_star(start_point, end_point, graph)
 
     return path
