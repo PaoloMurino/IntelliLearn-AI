@@ -1,10 +1,10 @@
 import pandas as pd
 import json
-from math import radians, sin, cos, sqrt, atan2
 from haversine import haversine, Unit
 from itertools import combinations
 
-#utilizzo della formula di haversine per calcolare i vicini di ogni punto del dataset
+
+# utilizzo della formula di haversine per calcolare i vicini di ogni punto del dataset
 def haversine_distance(lat1, lon1, lat2, lon2):
     # coord1 e coord2 devono essere tuple (latitudine, longitudine)
     coord1 = (lat1, lon1)
@@ -37,7 +37,7 @@ graph = {str(coord): [] for coord in dataset}  # Converti le tuple in stringhe
 
 # Utilizza itertools.combinations per ottenere tutte le coppie uniche di coordinate
 for coord1, coord2 in combinations(dataset, 2):
-    if haversine_distance(coord1[0], coord1[1], coord2[0], coord2[1]) < 0.045:  # Soglia di 45 m
+    if haversine_distance(coord1[0], coord1[1], coord2[0], coord2[1]) < 0.026:  # Soglia di 26 m
         graph[str(coord1)].append(str(coord2))
         graph[str(coord2)].append(str(coord1))
 

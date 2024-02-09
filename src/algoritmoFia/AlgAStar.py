@@ -1,6 +1,5 @@
 import heapq
 import pandas as pd
-from math import radians, sin, cos, sqrt, atan2
 from itertools import combinations
 from haversine import haversine, Unit
 
@@ -58,23 +57,18 @@ def a_star(start, goal, graph):
     return None  # Se nessun percorso viene trovato
 
 
+
 # Punto di inizio e punto di fine
 start_point = Node(lat=39.4305577,
                    lon=-0.3351722)
 end_point = Node(lat=39.4242222,
                  lon=-0.3140294)
 
-#39.4384956,-0.3037465 punto gate 3
-#39.441493,-0.3274658 punto gate 2
-#39.4242222,-0.3140294 punto gate 1
-"""
-# legge il foglio Excel con pandas
-file_path = 'coordinatePerProva.xlsx'  # Modifica il percorso del tuo file Excel
-df = pd.read_excel(file_path, names=['latitudine', 'longitudine'])
+# 39.4384956,-0.3037465 punto gate 3
+# 39.441493,-0.3274658 punto gate 2
+# 39.4242222,-0.3140294 punto gate 1
 
-# Rimuove le istanze duplicate nel DataFrame
-df_no_duplicates = df.drop_duplicates(subset=['latitudine', 'longitudine'])
-"""
+
 # legge il file csv con pandas
 file_path = "coordinate.csv"
 df = pd.read_csv(file_path, names=['latitudine', 'longitudine'])
@@ -96,9 +90,11 @@ graph = {coord: [] for coord in dataset}
 
 # Utilizza itertools.combinations per ottenere tutte le coppie uniche di coordinate
 for coord1, coord2 in combinations(dataset, 2):
-    if haversine_distance(coord1[0], coord1[1], coord2[0], coord2[1]) < 0.026:  # Soglia di 45 m per decidere i vicini di punto
+    if haversine_distance(coord1[0], coord1[1], coord2[0], coord2[1]) < 0.026:  # Soglia di 26 m per decidere i vicini di punto
         graph[coord1].append(coord2)
         graph[coord2].append(coord1)
+
+
 
 # lista contenente il percorso ottimale
 path = a_star(start_point, end_point, graph)
@@ -108,7 +104,7 @@ if path:
     path_df = pd.DataFrame(path, columns=['latitudine', 'longitudine'])
 
     # Save the DataFrame to an Excel file
-    #path_df.to_excel('percorso_ottimaleGate1.xlsx', index=False)
+    # path_df.to_excel('percorso_ottimaleGate1.xlsx', index=False)
     path_df.to_csv('percorso_ottimaleGate1.csv', index=False)
     print("Percorso ottimale salvato in 'percorso_ottimale.xlsx'")
 else:
