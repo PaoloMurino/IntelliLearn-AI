@@ -1,6 +1,4 @@
 import heapq
-import pandas as pd
-from itertools import combinations
 from haversine import haversine, Unit
 
 
