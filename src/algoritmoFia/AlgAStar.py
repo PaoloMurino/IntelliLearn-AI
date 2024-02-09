@@ -1,18 +1,6 @@
 import heapq
 from haversine import haversine, Unit
-
-
-# Definizione della classe Node per rappresentare i nodi nel grafo
-class Node:
-    def __init__(self, lat, lon, cost=0, parent=None):
-        self.lat = lat
-        self.lon = lon
-        self.cost = cost  # Costo del percorso finora per raggiungere il nodo
-        self.parent = parent  # Nodo genitore nel percorso
-
-    def __lt__(self, other):
-        return self.cost < other.cost  # Permette di confrontare nodi in base al costo
-
+from src.algoritmoFia.Node import Node
 
 # Funzione per calcolare la distanza haversine tra due coordinate
 def distanza_haversine(lat1, lon1, lat2, lon2):
