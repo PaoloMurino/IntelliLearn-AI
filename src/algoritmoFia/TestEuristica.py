@@ -1,7 +1,7 @@
 import pandas as pd
 from src.algoritmoFia.AlgAStar import distanza_haversine
 
-file_path = "percorso_ottimaleGate1.csv"
+file_path = "percorso_ottimaleGate3.csv"
 df = pd.read_csv(file_path, header=None, names=['latitudine', 'longitudine'], skiprows=1)
 
 # Converte la colonna della latitudine in numeri
@@ -53,7 +53,7 @@ def testConsistenza(percorso_ottimale):
 
         # Se il costo di passo più l'euristica dal nodo successivo è maggiore dell'euristica dal nodo corrente, l'euristica non è consistente
         if g_score + h_score_next > h_score_current:
-            print("non consistente")
+            print("consistente!")
             #return None
 
     # Se nessuna incosistenza è stata trovata, l'euristica è consistente
