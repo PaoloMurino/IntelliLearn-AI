@@ -13,7 +13,7 @@
 
 ## General Info
 ***
-This project was developed as an integration for the Software Engineering exam at the University of Salerno.
+This project was developed as an integration for the Software Engineering exam at the University of Salerno. For more information, please refer to the complete project repository: https://github.com/vincenzo-esposit0/C07_SmartCargo
 ### Authors
 A list of the authors of the project:
 * Team Member - [Mariapia Sorrentino](https://github.com/Marypi02)
