@@ -26,9 +26,6 @@ A list of the authors of the project:
 ***
 A list of technologies used within the project:
 * [Python](https://www.python.org/)
-* [Flask](https://flask.palletsprojects.com/en/2.2.x/)
-* [Angular JS](https://angularjs.org/)
-
 
 ## FAQs
 ***
