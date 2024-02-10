@@ -52,11 +52,12 @@ def testConsistenza(percorso_ottimale):
         h_score_next = distanza_haversine(next_node[0], next_node[1], goal[0], goal[1])
 
         # Se il costo di passo più l'euristica dal nodo successivo è maggiore dell'euristica dal nodo corrente, l'euristica non è consistente
-        if g_score + h_score_next > h_score_current:
-            print("consistente!")
+        if h_score_current > g_score + h_score_next:
+            print("non consistente!")
             #return None
 
     # Se nessuna incosistenza è stata trovata, l'euristica è consistente
+    print("consistente!")
     return True
 
 ammissibilita = ammissibile(percorso_ottimale)
