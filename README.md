@@ -52,7 +52,7 @@ The integration of this algorithm will optimize transit routes, taking into acco
 **5. Implementation and execution of the algorithm:** Identify the search algorithm to implement based on the objectives to be satisfied, in our case the A* informed search algorithm was chosen; having done this, run the algorithm on the constructed graph and with the chosen heuristic and observe the results obtained.
 
 ## Presentation
-* [Team Member's Presentation](https://www.canva.com/design/DAF8M7XPcCo/7_DcqU5w5C6n32rFeto9gA/edit?utm_content=DAF8M7XPcCo&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+* [Team Member's Presentation](https://www.canva.com/design/DAF8M7XPcCo/oHw5eSmOmmaM1HrJj4FIEQ/view?utm_content=DAF8M7XPcCo&utm_campaign=designshare&utm_medium=link&utm_source=editor)
 
 ## Contributors
 <a href="https://github.com/PaoloMurino/IntelliLearn-AI/graphs/contributors">
