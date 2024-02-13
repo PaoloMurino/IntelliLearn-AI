@@ -45,10 +45,10 @@ The integration of this algorithm will optimize transit routes, taking into acco
 
 ## How to replicate the work done?
 
-**1. Map creation:** Through the use of MyMaps, trace the possible routes, each of which will be represented by a set of coordinates, composed of latitude and longitude.
-**2. Data formatting:** Using the library offered by Python, pandas, format the set of MyMaps coordinates in a csv file composed of two columns: latitude, longitude.
-**3. Construction of the graph:** Build the graph by defining the nodes close to each node by setting a maximum distance for which they can be considered such.
-**4. Definition of heuristics:** Choice of metric to use that represents additional information about the problem. In our case the Haversine distance was identified.
+**1. Map creation:** Through the use of MyMaps, trace the possible routes, each of which will be represented by a set of coordinates, composed of latitude and longitude. <br>
+**2. Data formatting:** Using the library offered by Python, pandas, format the set of MyMaps coordinates in a csv file composed of two columns: latitude, longitude. <br>
+**3. Construction of the graph:** Build the graph by defining the nodes close to each node by setting a maximum distance for which they can be considered such. <br>
+**4. Definition of heuristics:** Choice of metric to use that represents additional information about the problem. In our case the Haversine distance was identified. <br>
 **5. Implementation and execution of the algorithm:** Identify the search algorithm to implement based on the objectives to be satisfied, in our case the A* informed search algorithm was chosen; having done this, run the algorithm on the constructed graph and with the chosen heuristic and observe the results obtained.
 
 ## Presentation
