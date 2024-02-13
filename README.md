@@ -7,9 +7,10 @@
 ## Table of Contents
 1. [General Info](#general-info)
 2. [Technologies](#technologies)
-3. [FAQs](#faqs)
-4. [Presentations](#presentations)
-5. [Contributors](#contributors)
+3. [Resources](#resources)
+4. [Objective](#objective)
+5. [Presentation](#presentation)
+6. [Contributors](#contributors)
 
 ## General Info
 ***
@@ -27,27 +28,30 @@ A list of the authors of the project:
 A list of technologies used within the project:
 * [Python](https://www.python.org/)
 
-## FAQs
+## Resources
 ***
-A list of frequently asked questions
+A list of resources used within the project:
+* [MyMaps](https://www.google.com/intl/it/maps/about/mymaps/)
+* [Dataset](https://github.com/PaoloMurino/IntelliLearn-AI/blob/master/src/algoritmoFia/coordinate.csv)
 
-**Q: What is the main objective of the project SmartCargo in the Port of Valencia?** <br>
-A: The main objective of the project is to implement an integrated system aimed at enhancing port infrastructures, improving the safety and efficiency of cargo handling operations, and optimizing transit routes to reduce CO2 emissions.
+## Objective
 
-**Q: What are the specific phases that the system must support?** <br>
-A: The system must support various phases, including defining efficient routes for trucks, real-time tracking of trucks within the port, evaluating the routes taken, searching for information on trucks transited during a specific period, generating activity reports, and issuing alerts for security operators.
+**Q: What is the main objective of integrating artificial intelligence into the SmartCargo project in the Port of Valencia?** <br>
+A: The main goal of the project is to enhance the existing system by integrating artificial intelligence, aiming to strengthen port infrastructure, improve the safety and efficiency of cargo handling operations, and optimize transit routes to reduce CO2 emissions.
 
-**Q: How will the system strengthen control over port activities?** <br>
-A: The system will contribute to the control of port activities through the definition of correct routes, real-time tracking of vehicles, evaluation of routes taken, and the ability to generate detailed reports on activities.
+To achieve these objectives, the development of an advanced search algorithm is proposed, particularly the well-known A* algorithm, aimed at calculating the shortest routes that truck drivers will need to follow to access the port and reach the destination point for cargo loading/unloading operations.
 
-**Q: How does the system prevent the illegal transport of goods?** <br>
-A: The system prevents the illegal transport of goods by monitoring and accurately tracking vehicles, facilitating the detection of any deviations from authorized routes.
+The integration of this algorithm will optimize transit routes, taking into account various factors such as traffic congestion, road safety, and CO2 emissions minimization. This will contribute to improving the overall efficiency of the port system, reducing transit times, and optimizing the use of available resources.
 
-**Q: What are the functionalities of the alerting system for security operators?** <br>
-A: The alerting system notifies security operators in real-time about critical situations or deviations from authorized routes, contributing to ensuring the safety of port operations.
+## How to replicate the work done?
 
-## Presentations
-* [Project Manager's Presentation](https://www.canva.com/design/DAF6uTVis9s/BMEmk4i4gFNNHjiz9rObMg/view?utm_content=DAF6uTVis9s&utm_campaign=designshare&utm_medium=link&utm_source=editor)
+**1. Map creation:** Through the use of MyMaps, trace the possible routes, each of which will be represented by a set of coordinates, composed of latitude and longitude.
+**2. Data formatting:** Using the library offered by Python, pandas, format the set of MyMaps coordinates in a csv file composed of two columns: latitude, longitude.
+**3. Construction of the graph:** Build the graph by defining the nodes close to each node by setting a maximum distance for which they can be considered such.
+**4. Definition of heuristics:** Choice of metric to use that represents additional information about the problem. In our case the Haversine distance was identified.
+**5. Implementation and execution of the algorithm:** Identify the search algorithm to implement based on the objectives to be satisfied, in our case the A* informed search algorithm was chosen; having done this, run the algorithm on the constructed graph and with the chosen heuristic and observe the results obtained.
+
+## Presentation
 * [Team Member's Presentation](https://www.canva.com/design/DAF6oBN4d58/_bE7eIt4P1xdDIiTGEIbTA/view?utm_content=DAF6oBN4d58&utm_campaign=designshare&utm_medium=link&utm_source=editor)
 
 ## Contributors
