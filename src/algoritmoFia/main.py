@@ -1,6 +1,7 @@
 import pandas as pd
-from itertools import combinations
-from src.algoritmoFia.AlgAStar import distanza_haversine, Node, a_star
+import matplotlib.pyplot as plt
+from src.algoritmoFia.AlgAStar import Node, a_star
+from src.algoritmoFia.CostruzioneGrafo import costruzione_grafo
 from src.algoritmoFia.TestComplessita import analisiComplessita
 
 
@@ -28,43 +29,63 @@ def percorso_ottimale(gate):
     # Converte la colonna della longitudine in numeri
     df['longitudine'] = pd.to_numeric(df['longitudine'], errors='coerce')
 
-    # Rimuove le righe duplicate
+    # Rimuove eventuali righe duplicate
     df_no_duplicates = df.drop_duplicates(subset=['latitudine', 'longitudine']).copy()
-    # Rimuove le righe con dati mancanti
+    # Rimuove eventuali righe con dati mancanti
     df_no_duplicates = df_no_duplicates.dropna(subset=['latitudine', 'longitudine'])
 
     # Crea la lista delle coordinate
     dataset = [(row['latitudine'], row['longitudine']) for index, row in df_no_duplicates.iterrows()]
 
-    # Crea il grafo rappresentato come un dizionario delle liste di adiacenza
-    graph = {coord: [] for coord in dataset}
-
-    # Trova le coppie di coordinate vicine e aggiunge gli archi al grafo
-    for coord1, coord2 in combinations(dataset, 2):
-        if distanza_haversine(coord1[0], coord1[1], coord2[0], coord2[1]) < 0.026:  # Soglia di 26 metri per decidere i vicini
-            graph[coord1].append(coord2)
-            graph[coord2].append(coord1)
+    # Costruzione del grafo
+    graph = costruzione_grafo(dataset)
 
     # Individuazione del percorso ottimale utilizzando l'algoritmo A*
     path, spazio = a_star(start_point, end_point, graph)
 
-    latitudini = []
-    longitudini = []
-
-    for node in path:
-        lat = node[0]
-        lon = node[1]
-
-        latitudini.append(lat)
-        longitudini.append(lon)
-
-    print(latitudini)
+    # Chiamata alla funzione per visualizzare il percorso
+    visualizza_path(path, graph)
 
     return path, graph, spazio
 
+# funzione per la rappresentazione grafica del percorso individuato
+def visualizza_path(path, graph):
+    # Estrae le coordinate dal grafo
+    coordinates = list(graph.keys())
 
+    # Estrae latitudini e longitudini dal percorso
+    latitudes = [coord[0] for coord in path]
+    longitudes = [coord[1] for coord in path]
+
+    # Estrae latitudini e longitudini dai nodi nel grafo
+    all_latitudes = [coord[0] for coord in coordinates]
+    all_longitudes = [coord[1] for coord in coordinates]
+
+    # Disegna il grafo
+    plt.figure(figsize=(10, 8))
+    plt.plot(all_longitudes, all_latitudes, 'o', color='blue', markersize=4, label='Nodi')
+    plt.plot(longitudes, latitudes, marker='o', color='red', linestyle='-', markersize=8, label='Percorso ottimale')
+    plt.xlabel('Longitudine')
+    plt.ylabel('Latitudine')
+    plt.title('Percorso Ottimale')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+
+"""ESECUZIONE DEL MAIN"""
+
+# Scelta del punto di destinazione {1, 2, 3}
 gate = 1
 path, graph, spazio = percorso_ottimale(gate)
+
+# Analisi della complessità temporale
+time_complexity = analisiComplessita(graph)
+
+print(f"Complessità temporale: {time_complexity:.4f}")
+print(f"Complessità spaziale: {spazio}")
+
+
 
 """SALVATAGGIO DEL PERCORSO OTTIMALE IN UN FILE CSV, USATO PER CONFRONTARE IL PERCORSO RISULTANTE SULLA MAPPA
 if path:
@@ -77,8 +98,3 @@ if path:
 else:
     print("Nessun percorso trovato.")
 """
-
-time_complexity = analisiComplessita(graph)
-
-print(f"Complessità temporale: {time_complexity}")
-print(f"Complessità spaziale: {spazio}")

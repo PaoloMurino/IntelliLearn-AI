@@ -1,7 +1,9 @@
 import pandas as pd
 
+"""CODICE UTILIZZATO PER FORMATTARE IL DATASET DI PUNTI IN 2 COLONNE: LATITUDINE, LONGITUDINE"""
+
 # Carica il file CSV
-file_csv = 'IntellilearnMap- Entrata (2).csv'  # Sostituisci con il tuo percorso del file CSV
+file_csv = 'nomeEsempio.csv'  # Sostituisci con il tuo percorso del file CSV
 df_csv = pd.read_csv(file_csv)
 
 # Estrai colonne di latitudine e longitudine
