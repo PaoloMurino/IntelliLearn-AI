@@ -1,7 +1,7 @@
 import pandas as pd
 from itertools import combinations
 from src.algoritmoFia.AlgAStar import distanza_haversine, Node, a_star
-from src.algoritmoFia.TestComplessita import analisiComplessita, isBilanciato
+from src.algoritmoFia.TestComplessita import analisiComplessita
 
 
 def percorso_ottimale(gate):
@@ -46,7 +46,7 @@ def percorso_ottimale(gate):
             graph[coord2].append(coord1)
 
     # Individuazione del percorso ottimale utilizzando l'algoritmo A*
-    path = a_star(start_point, end_point, graph)
+    path, spazio = a_star(start_point, end_point, graph)
 
     latitudini = []
     longitudini = []
@@ -60,28 +60,25 @@ def percorso_ottimale(gate):
 
     print(latitudini)
 
-    return path, graph
+    return path, graph, spazio
 
 
-gate = 3
-path, graph = percorso_ottimale(gate)
+gate = 1
+path, graph, spazio = percorso_ottimale(gate)
 
+"""SALVATAGGIO DEL PERCORSO OTTIMALE IN UN FILE CSV, USATO PER CONFRONTARE IL PERCORSO RISULTANTE SULLA MAPPA
 if path:
     # Crea un DataFrame dal percorso
     path_df = pd.DataFrame(path, columns=['latitudine', 'longitudine'])
 
     # Salva il DataFrame in un file CSV
     path_df.to_csv('percorso_ottimaleGate4.csv', index=False)
-    print("Percorso ottimale salvato in 'percorso_ottimaleGate1.csv'")
+    print("Percorso ottimale salvato in 'percorso_ottimaleGate4.csv'")
 else:
     print("Nessun percorso trovato.")
+"""
 
-time_complexity, space_complexity = analisiComplessita(graph)
+time_complexity = analisiComplessita(graph)
 
 print(f"Complessità temporale: {time_complexity}")
-print(f"Complessità spaziale: {space_complexity}")
-
-balanced, balancedNodes, balancedEdges = isBilanciato(graph)
-print(f"Bilanciamento grado: {balanced}")
-print(f"Bilanciamento nodi: {balancedNodes}")
-print(f"Bilanciamento archi: {balancedEdges}")
+print(f"Complessità spaziale: {spazio}")
