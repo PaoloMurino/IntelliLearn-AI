@@ -14,6 +14,7 @@ def distanza_haversine(lat1, lon1, lat2, lon2):
 def a_star(start, goal, graph):
     open_set = [start]  # Inizializza l'insieme aperto con il nodo di partenza
     closed_set = set()  # Inizializza l'insieme chiuso vuoto
+    nodes_in_memory = 0 #Necessario per memorizzare il numero di nodi effettivamente
 
     while open_set:
         current_node = heapq.heappop(open_set)  # Estrae il nodo con il costo minimo dall'insieme aperto
@@ -26,9 +27,10 @@ def a_star(start, goal, graph):
             while current_node:
                 path.append((current_node.lat, current_node.lon))
                 current_node = current_node.parent
-            return path[::-1]
+            return path[::-1], nodes_in_memory
 
         closed_set.add((current_node.lat, current_node.lon))  # Aggiunge il nodo corrente all'insieme chiuso
+        nodes_in_memory += 1  # Aggiorna l'insieme di nodi memorizzati in memoria
 
         for neighbor in graph[(current_node.lat, current_node.lon)]:  # Scorre i vicini del nodo corrente
             if neighbor not in closed_set:  # Se il vicino non è stato esplorato
@@ -42,4 +44,3 @@ def a_star(start, goal, graph):
                     heapq.heappush(open_set, neighbor_node)
 
     return None  # Se nessun percorso viene trovato
-
