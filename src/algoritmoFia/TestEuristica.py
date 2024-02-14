@@ -2,7 +2,7 @@ import pandas as pd
 from src.algoritmoFia.AlgAStar import distanza_haversine
 
 # Legge i dati dal file CSV
-file_path = "percorso_ottimaleGate3.csv"
+file_path = "percorso_ottimaleGate1.csv"
 df = pd.read_csv(file_path, header=None, names=['latitudine', 'longitudine'], skiprows=1)
 
 # Converte le colonne della latitudine e longitudine in numeri
