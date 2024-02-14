@@ -48,6 +48,7 @@ def percorso_ottimale(gate):
 
     return path, graph, spazio
 
+
 # funzione per la rappresentazione grafica del percorso individuato
 def visualizza_path(path, graph):
     # Estrae le coordinate dal grafo

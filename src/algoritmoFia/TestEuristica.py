@@ -4,7 +4,7 @@ from src.algoritmoFia.AlgAStar import distanza_haversine
 """CODICE USATO PER VERIFICARE CHE L'EURISTICA SCELTA SIA AMMISSIBILE E CONSISTENTE"""
 
 # Legge i dati dal file CSV
-file_path = "percorso_ottimaleGate1.csv" # sostituire col proprio percorso del file da verificare
+file_path = "percorso_ottimaleGate1.csv"  # sostituire col proprio percorso del file da verificare
 df = pd.read_csv(file_path, header=None, names=['latitudine', 'longitudine'], skiprows=1)
 
 # Converte le colonne della latitudine e longitudine in numeri
@@ -15,6 +15,7 @@ df['longitudine'] = pd.to_numeric(df['longitudine'], errors='coerce')
 
 # Crea la lista delle coordinate
 percorso_ottimale = [(row['latitudine'], row['longitudine']) for index, row in df.iterrows()]
+
 
 # Funzione per verificare l'ammissibilità dell'euristica
 def testAmmissibilita(percorso_ottimale):
@@ -36,6 +37,7 @@ def testAmmissibilita(percorso_ottimale):
 
     # L'euristica è ammissibile se non sovrastima il costo per raggiungere l'obiettivo
     return heuristic <= total_cost
+
 
 # Funzione per testare la consistenza dell'euristica
 def testConsistenza(percorso_ottimale):
@@ -62,6 +64,7 @@ def testConsistenza(percorso_ottimale):
     # Se nessuna incosistenza è stata trovata, l'euristica è consistente
     print("consistente!")
     return True
+
 
 # Verifica dell'ammissibilità dell'euristica
 ammissibilita = testAmmissibilita(percorso_ottimale)

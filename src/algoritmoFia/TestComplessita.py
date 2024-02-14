@@ -1,7 +1,5 @@
 from math import log
 
-import networkx as nx
-
 
 def analisiComplessita(graph):
     V = len(graph)  # Numero totale di nodi

@@ -2,6 +2,7 @@ import heapq
 from haversine import haversine, Unit
 from src.algoritmoFia.Node import Node
 
+
 # Funzione per calcolare la distanza haversine tra due coordinate
 def distanza_haversine(lat1, lon1, lat2, lon2):
     coord1 = (lat1, lon1)
@@ -14,7 +15,7 @@ def distanza_haversine(lat1, lon1, lat2, lon2):
 def a_star(start, goal, graph):
     open_set = [start]  # Inizializza l'insieme aperto con il nodo di partenza
     closed_set = set()  # Inizializza l'insieme chiuso vuoto
-    nodes_in_memory = 0 #Necessario per memorizzare il numero di nodi effettivamente
+    nodes_in_memory = 0  # Necessario per memorizzare il numero di nodi effettivamente
 
     while open_set:
         current_node = heapq.heappop(open_set)  # Estrae il nodo con il costo minimo dall'insieme aperto

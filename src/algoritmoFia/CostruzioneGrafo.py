@@ -10,6 +10,7 @@ def distanza_haversine(lat1, lon1, lat2, lon2):
     distance = haversine(coord1, coord2, unit=Unit.KILOMETERS)
     return distance
 
+
 def costruzione_grafo(dataset):
     # Crea il grafo rappresentato come un dizionario delle liste di adiacenza
     graph = {coord: [] for coord in dataset}
