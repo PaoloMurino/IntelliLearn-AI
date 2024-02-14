@@ -31,7 +31,7 @@ A list of technologies used within the project:
 ## Resources
 ***
 A list of resources used within the project:
-* [MyMaps](https://www.google.com/intl/it/maps/about/mymaps/)
+* [MyMaps](https://www.google.com/maps/d/edit?mid=15SJrJ_U2PiyLp9HL1TCvjhQRBdDcTvE&usp=sharing)
 * [Dataset](https://github.com/PaoloMurino/IntelliLearn-AI/blob/master/src/algoritmoFia/coordinate.csv)
 
 ## Objective
@@ -56,5 +56,5 @@ The integration of this algorithm will optimize transit routes, taking into acco
 
 ## Contributors
 <a href="https://github.com/PaoloMurino/IntelliLearn-AI/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=PaoloMurino/IntelliLearn-AI" />
+  <img src="https://contrib.rocks/image?repo=PaoloMurino/IntelliLearn-AI" alt ="contributors of the project"/>
 </a>
