@@ -35,7 +35,7 @@ A list of resources used within the project:
 * [Dataset](https://github.com/PaoloMurino/IntelliLearn-AI/blob/master/src/algoritmoFia/coordinate.csv)
 
 ## Objective
-
+***
 **Q: What is the main objective of integrating artificial intelligence into the SmartCargo project in the Port of Valencia?** <br>
 A: The main goal of the project is to enhance the existing system by integrating artificial intelligence, aiming to strengthen port infrastructure, improve the safety and efficiency of cargo handling operations, and optimize transit routes to reduce CO2 emissions.
 
@@ -44,7 +44,7 @@ To achieve these objectives, the development of an advanced search algorithm is 
 The integration of this algorithm will optimize transit routes, taking into account various factors such as traffic congestion, road safety, and CO2 emissions minimization. This will contribute to improving the overall efficiency of the port system, reducing transit times, and optimizing the use of available resources.
 
 ## How to replicate the work done?
-
+***
 **1. Map creation:** Through the use of MyMaps, trace the possible routes, each of which will be represented by a set of coordinates, composed of latitude and longitude. <br>
 **2. Data formatting:** Using the library offered by Python, pandas, format the set of MyMaps coordinates in a csv file composed of two columns: latitude, longitude. <br>
 **3. Construction of the graph:** Build the graph by defining the nodes close to each node by setting a maximum distance for which they can be considered such. <br>
