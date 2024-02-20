@@ -9,3 +9,4 @@ def analisiComplessita(graph):
     time_complexity = (V + E) * log(V)
 
     return time_complexity
+
