@@ -1,11 +1,13 @@
-import pandas as pd
-import matplotlib.pyplot as plt
-from src.algoritmoFia.AlgAStar import Node, a_star
-from src.algoritmoFia.AlgBestFirstGreedy import best_first_greedy
-from src.algoritmoFia.AlgBeamSearch import beam_search
-from src.algoritmoFia.CostruzioneGrafo import costruzione_grafo
-from src.algoritmoFia.TestComplessita import analisiComplessita
 import time
+
+import matplotlib.pyplot as plt
+import pandas as pd
+from src.algoritmoFia.Informata.AlgAStar import Node, a_star
+from src.algoritmoFia.Informata.AlgBeamSearch import beam_search
+from src.algoritmoFia.Informata.AlgBestFirstGreedy import best_first_greedy
+
+from src.algoritmoFia.CostruzioneGrafo import costruzione_grafo
+
 
 def percorso_ottimale(gate):
     # Definizione del punto di partenza
@@ -60,7 +62,8 @@ def percorso_ottimale(gate):
     # Chiamata alla funzione per visualizzare i percorsi
     visualizza_path(path_astar, path_greedy, path_beam_search, graph)
 
-    return (path_astar, astar_execution_time), (path_greedy, greedy_execution_time), (path_beam_search, beam_search_execution_time), graph
+    return (path_astar, astar_execution_time), (path_greedy, greedy_execution_time), (
+    path_beam_search, beam_search_execution_time), graph
 
 
 # Funzione per la rappresentazione grafica dei percorsi individuati
@@ -77,8 +80,8 @@ def visualizza_path(path_astar, path_greedy, path_beam_search, graph):
     longitudes_greedy = [coord[1] for coord in path_greedy]
 
     # Estrae latitudini e longitudini dal percorso Beam Search
-    #latitudes_beam_search = [coord[0] for coord in path_beam_search]
-    #longitudes_beam_search = [coord[1] for coord in path_beam_search]
+    latitudes_beam_search = [coord[0] for coord in path_beam_search]
+    longitudes_beam_search = [coord[1] for coord in path_beam_search]
 
     # Estrae latitudini e longitudini dai nodi nel grafo
     all_latitudes = [coord[0] for coord in coordinates]
@@ -87,7 +90,8 @@ def visualizza_path(path_astar, path_greedy, path_beam_search, graph):
     # Disegna il grafo e i percorsi per A*
     plt.figure(figsize=(10, 8))
     plt.plot(all_longitudes, all_latitudes, 'o', color='blue', markersize=4, label='Nodi')
-    plt.plot(longitudes_astar, latitudes_astar, marker='o', color='red', linestyle='-', markersize=8, label='Percorso A*')
+    plt.plot(longitudes_astar, latitudes_astar, marker='o', color='red', linestyle='-', markersize=8,
+             label='Percorso A*')
     plt.xlabel('Longitudine')
     plt.ylabel('Latitudine')
     plt.title('Percorso Ottimale - A*')
@@ -98,7 +102,8 @@ def visualizza_path(path_astar, path_greedy, path_beam_search, graph):
     # Disegna il grafo e i percorsi per Best-First Greedy
     plt.figure(figsize=(10, 8))
     plt.plot(all_longitudes, all_latitudes, 'o', color='blue', markersize=4, label='Nodi')
-    plt.plot(longitudes_greedy, latitudes_greedy, marker='o', color='green', linestyle='-', markersize=8, label='Percorso Best-First Greedy')
+    plt.plot(longitudes_greedy, latitudes_greedy, marker='o', color='green', linestyle='-', markersize=8,
+             label='Percorso Best-First Greedy')
     plt.xlabel('Longitudine')
     plt.ylabel('Latitudine')
     plt.title('Percorso Ottimale - Best-First Greedy')
@@ -107,23 +112,23 @@ def visualizza_path(path_astar, path_greedy, path_beam_search, graph):
     plt.show()
 
     # Disegna il grafo e i percorsi per Beam Search
-'''    plt.figure(figsize=(10, 8))
+    plt.figure(figsize=(10, 8))
     plt.plot(all_longitudes, all_latitudes, 'o', color='blue', markersize=4, label='Nodi')
-    plt.plot(longitudes_beam_search, latitudes_beam_search, marker='o', color='purple', linestyle='-', markersize=8, label='Percorso Beam Search')
+    plt.plot(longitudes_beam_search, latitudes_beam_search, marker='o', color='purple', linestyle='-', markersize=8,
+             label='Percorso Beam Search')
     plt.xlabel('Longitudine')
     plt.ylabel('Latitudine')
     plt.title('Percorso Ottimale - Beam Search')
     plt.legend()
     plt.grid(True)
-    plt.show()'''
-
+    plt.show()
 
 
 # ESECUZIONE DEL MAIN
 
 # Scelta del punto di destinazione {1, 2, 3}
 gate = 3
-path_astar, path_greedy, path_beam_search,  graph = percorso_ottimale(gate)
+path_astar, path_greedy, path_beam_search, graph = percorso_ottimale(gate)
 
 print("Tempo di esecuzione di A*: ", path_astar[1])
 print("Tempo di esecuzione di Best-First Greedy: ", path_greedy[1])
