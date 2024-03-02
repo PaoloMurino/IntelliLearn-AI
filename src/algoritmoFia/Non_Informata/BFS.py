@@ -14,7 +14,9 @@ def breadth_first_search(start, goal, graph):
         if (current_node.lat, current_node.lon) in closed_set:  # Se il nodo è già stato esplorato, salta
             continue
 
-        if (current_node.lat, current_node.lon) == (goal.lat, goal.lon):
+        if (current_node.lat, current_node.lon) == (
+                goal.lat,
+                goal.lon):  # Se il nodo corrente è il nodo di destinazione, costruisci e restituisci il percorso
             path = []
             while current_node:
                 path.append((current_node.lat, current_node.lon))
@@ -29,4 +31,4 @@ def breadth_first_search(start, goal, graph):
                 neighbor_node = Node(neighbor[0], neighbor[1], 0, current_node)  # Crea un nuovo nodo per il vicino
                 queue.append(neighbor_node)  # Aggiunge il vicino alla coda
 
-return None, nodes_in_memory  # Se nessun percorso viene trovato
+    return None, nodes_in_memory  # Se nessun percorso viene trovato
