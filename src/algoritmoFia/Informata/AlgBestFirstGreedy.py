@@ -10,7 +10,6 @@ def distanza_haversine(lat1, lon1, lat2, lon2):
     return distance
 
 # Algoritmo Best-First Greedy per trovare il percorso tra due punti
-# Modifica della funzione best_first_greedy per restituire solo il percorso e la complessità spaziale
 def best_first_greedy(start, goal, graph):
     open_set = [(distanza_haversine(start.lat, start.lon, goal.lat, goal.lon), start)]  # Inizializza l'insieme aperto con il nodo di partenza e la sua euristica
     closed_set = set()  # Inizializza l'insieme chiuso vuoto
