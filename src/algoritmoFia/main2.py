@@ -101,7 +101,7 @@ def visualizza_path(path_BFS, path_DFS, graph):
 # ESECUZIONE DEL MAIN
 
 # Scelta del punto di destinazione {1, 2, 3}
-gate = 1
+gate = 2
 path_BFS, path_DFS,  graph = percorso_ottimale(gate)
 
 

@@ -13,7 +13,7 @@ def depth_first_search(start, goal, graph):
         if (current_node.lat, current_node.lon) in closed_set:  # Se il nodo è già stato esplorato, salta
             continue
 
-        if (current_node.lat, current_node.lon) == (goal.lat, goal.lon):  # Se il nodo corrente è il nodo di destinazione, costruisci e restituisci il percorso
+        if (current_node.lat, current_node.lon) == (goal.lat, goal.lon):
             path = []
             while current_node:
                 path.append((current_node.lat, current_node.lon))

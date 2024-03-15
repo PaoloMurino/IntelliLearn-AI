@@ -71,58 +71,63 @@ def visualizza_path(path_astar, path_greedy, path_beam_search, graph):
     # Estrae le coordinate dal grafo
     coordinates = list(graph.keys())
 
-    # Estrae latitudini e longitudini dal percorso A*
-    latitudes_astar = [coord[0] for coord in path_astar]
-    longitudes_astar = [coord[1] for coord in path_astar]
-
-    # Estrae latitudini e longitudini dal percorso Best-First Greedy
-    latitudes_greedy = [coord[0] for coord in path_greedy]
-    longitudes_greedy = [coord[1] for coord in path_greedy]
-
-    # Estrae latitudini e longitudini dal percorso Beam Search
-    latitudes_beam_search = [coord[0] for coord in path_beam_search]
-    longitudes_beam_search = [coord[1] for coord in path_beam_search]
-
     # Estrae latitudini e longitudini dai nodi nel grafo
     all_latitudes = [coord[0] for coord in coordinates]
     all_longitudes = [coord[1] for coord in coordinates]
 
     # Disegna il grafo e i percorsi per A*
-    plt.figure(figsize=(10, 8))
-    plt.plot(all_longitudes, all_latitudes, 'o', color='blue', markersize=4, label='Nodi')
-    plt.plot(longitudes_astar, latitudes_astar, marker='o', color='red', linestyle='-', markersize=8,
-             label='Percorso A*')
-    plt.xlabel('Longitudine')
-    plt.ylabel('Latitudine')
-    plt.title('Percorso Ottimale - A*')
-    plt.legend()
-    plt.grid(True)
-    plt.show()
+    if path_astar:
+        latitudes_astar = [coord[0] for coord in path_astar]
+        longitudes_astar = [coord[1] for coord in path_astar]
+
+        plt.figure(figsize=(10, 8))
+        plt.plot(all_longitudes, all_latitudes, 'o', color='blue', markersize=4, label='Nodi')
+        plt.plot(longitudes_astar, latitudes_astar, marker='o', color='red', linestyle='-', markersize=8,
+                 label='Percorso A*')
+        plt.xlabel('Longitudine')
+        plt.ylabel('Latitudine')
+        plt.title('Percorso Ottimale - A*')
+        plt.legend()
+        plt.grid(True)
+        plt.show()
+    else:
+        print("Nessun percorso trovato con A*")
 
     # Disegna il grafo e i percorsi per Best-First Greedy
-    plt.figure(figsize=(10, 8))
-    plt.plot(all_longitudes, all_latitudes, 'o', color='blue', markersize=4, label='Nodi')
-    plt.plot(longitudes_greedy, latitudes_greedy, marker='o', color='green', linestyle='-', markersize=8,
-             label='Percorso Best-First Greedy')
-    plt.xlabel('Longitudine')
-    plt.ylabel('Latitudine')
-    plt.title('Percorso Ottimale - Best-First Greedy')
-    plt.legend()
-    plt.grid(True)
-    plt.show()
+    if path_greedy:
+        latitudes_greedy = [coord[0] for coord in path_greedy]
+        longitudes_greedy = [coord[1] for coord in path_greedy]
+
+        plt.figure(figsize=(10, 8))
+        plt.plot(all_longitudes, all_latitudes, 'o', color='blue', markersize=4, label='Nodi')
+        plt.plot(longitudes_greedy, latitudes_greedy, marker='o', color='green', linestyle='-', markersize=8,
+                 label='Percorso Best-First Greedy')
+        plt.xlabel('Longitudine')
+        plt.ylabel('Latitudine')
+        plt.title('Percorso Ottimale - Best-First Greedy')
+        plt.legend()
+        plt.grid(True)
+        plt.show()
+    else:
+        print("Nessun percorso trovato con Best-First Greedy")
 
     # Disegna il grafo e i percorsi per Beam Search
-    plt.figure(figsize=(10, 8))
-    plt.plot(all_longitudes, all_latitudes, 'o', color='blue', markersize=4, label='Nodi')
-    plt.plot(longitudes_beam_search, latitudes_beam_search, marker='o', color='purple', linestyle='-', markersize=8,
-             label='Percorso Beam Search')
-    plt.xlabel('Longitudine')
-    plt.ylabel('Latitudine')
-    plt.title('Percorso Ottimale - Beam Search')
-    plt.legend()
-    plt.grid(True)
-    plt.show()
+    if path_beam_search:
+        latitudes_beam_search = [coord[0] for coord in path_beam_search]
+        longitudes_beam_search = [coord[1] for coord in path_beam_search]
 
+        plt.figure(figsize=(10, 8))
+        plt.plot(all_longitudes, all_latitudes, 'o', color='blue', markersize=4, label='Nodi')
+        plt.plot(longitudes_beam_search, latitudes_beam_search, marker='o', color='purple', linestyle='-', markersize=8,
+                 label='Percorso Beam Search')
+        plt.xlabel('Longitudine')
+        plt.ylabel('Latitudine')
+        plt.title('Percorso Ottimale - Beam Search')
+        plt.legend()
+        plt.grid(True)
+        plt.show()
+    else:
+        print("Nessun percorso trovato con Beam Search")
 
 # ESECUZIONE DEL MAIN
 
